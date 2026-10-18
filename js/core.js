@@ -424,7 +424,7 @@
     var pick = K.$('.expr-picker');
     EXPRS.forEach(function (e, i) {
       var b = K.el('button', { type: 'button', 'aria-pressed': i === 0 ? 'true' : 'false', 'aria-label': e[1] + ' expression' },
-        K.el('img', { src: 'assets/expr-' + e[0] + '.jpg', alt: '', width: 102, height: 110, loading: 'lazy' }), e[1]);
+        K.el('img', { src: 'assets/expr-' + e[0] + '.jpg', alt: '', width: 256, height: 256, loading: 'lazy' }), e[1]);
       b.addEventListener('click', function () {
         K.$$('button', pick).forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
         b.setAttribute('aria-pressed', 'true');

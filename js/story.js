@@ -24,6 +24,18 @@
   ];
   var BY_ID = {}; SCENES.forEach(function (s, i) { BY_ID[s.id] = i; });
 
+  /* plain-language "what to do here" help for every scene, plus which clues live there */
+  var HELP = {
+    prologue:  { todo: 'Tap the glowing clock in the picture to read the message. Then tap “Look up at the night sky”.', clues: ['clock', 'bell13', 'vanish'] },
+    stillhour: { todo: 'Watch the minute repeat. Press “Next loop” two or three times until a paper bird lands, then tap the bird.', clues: ['bird'] },
+    workshop:  { todo: 'Tap each drawing. Tap the small star in a drawing’s corner. Then press “Listen at the wall”.', clues: ['drawings', 'star', 'knocks'] },
+    library:   { todo: 'Press “Open KAIRO — FINAL LOOP”, then “Next page” until you reach the last page.', clues: ['book', 'warnings', 'star'] },
+    mirror:    { todo: 'Press “Step closer to the mirror”, then “Keep watching”. Read the lines, then choose who to trust.', clues: ['mirror', 'darkeyes'] },
+    truth:     { todo: 'Press “Next” to read each step of the truth. At the end press “Connect the clues”.', clues: [] },
+    tower:     { todo: 'Choose what Kairo does. You can pick “Reset the clock” first to see that ending, then return and choose again.', clues: [] },
+    epilogue:  { todo: 'Tap the doorway made of stars and listen.', clues: [] }
+  };
+
   /* ---------- shared bits ---------- */
   function bigClock(mode) {
     var n = mode === 'fwd' ? 13 : 12, s = '', i, a, x1, y1, x2, y2;
@@ -502,8 +514,20 @@
       ? E('button', { type: 'button', class: 'btn small' }, sc.next + ' →')
       : E('a', { class: 'btn small', href: '#portfolio' }, 'Try Kairo’s inventions →');
     if (sc.next) next.addEventListener('click', function () { show(i + 1, true); });
+    var help = HELP[sc.id] || { todo: '', clues: [] };
+    var todoCount = E('span', { class: 'todo-count' });
+    var todo = E('p', { class: 'todo' }, E('strong', { text: 'What to do here: ' }), help.todo, ' ', todoCount);
+    function updateTodo() {
+      if (!help.clues.length) { todoCount.textContent = ''; return; }
+      var got = help.clues.filter(function (c) { return K.hasClue(c); }).length;
+      todoCount.textContent = '(Clues in this scene: ' + got + ' of ' + help.clues.length + (got === help.clues.length ? ', all found ✓' : '') + ')';
+    }
+    updateTodo();
+    document.addEventListener('kairo:clue', updateTodo);
+    leaves.push(function () { document.removeEventListener('kairo:clue', updateTodo); });
     root.appendChild(E('article', { class: 'scene', 'aria-labelledby': 'sceneTitle' },
       E('header', { class: 'scene-head' }, E('p', { class: 'kicker', text: sc.kicker }), title),
+      todo,
       stage, narr,
       E('footer', { class: 'scene-nav' }, prev, next)));
     sc.build(stage, say, ctx);
