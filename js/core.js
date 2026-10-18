@@ -126,6 +126,9 @@
       else if (name === 'bell') { [220, 330, 440, 663].forEach(function (f, j) { tone(f, 2.6, 'sine', 0.12 / (j + 1), 0, f * 0.995); }); }
       else if (name === 'tick') { tone(1800, 0.03, 'square', 0.03); }
       else if (name === 'egg') { [523, 659, 784, 1046].forEach(function (f, j) { tone(f, 0.35, 'sine', 0.1, j * 0.12); }); }
+      else if (name === 'whisper') { tone(330, .45, 'sine', .055, 0, 220); tone(440, .55, 'sine', .035, .12, 294); }
+      else if (name === 'reveal') { [392, 523, 659, 784].forEach(function(f,j){ tone(f,.7,'sine',.07,j*.1); }); }
+      else if (name === 'ominous') { tone(110, .8, 'triangle', .08, 0, 55); tone(164, .65, 'sine', .035, .18, 82); }
     }
   };
 
@@ -301,6 +304,7 @@
 
   function initHero() {
     var stage = K.$('#kairoStage'), img = K.$('#kairoImg'), shadow = K.$('#kairoShadow');
+    var leftEye = K.$('#kairoEyeLeft'), rightEye = K.$('#kairoEyeRight');
     K.$('#eggStarPath').setAttribute('d', K.missingStarPath(10));
 
     /* lantern clock ticks */
@@ -319,21 +323,38 @@
       var r = stage.getBoundingClientRect();
       target.x = Math.max(-1, Math.min(1, ((clientX - r.left) / r.width - 0.5) * 2));
       target.y = Math.max(-1, Math.min(1, ((clientY - r.top) / r.height - 0.5) * 2));
+      if (leftEye) leftEye.style.transform = 'translate(' + (target.x * 8).toFixed(1) + 'px,' + (target.y * 5).toFixed(1) + 'px)';
+      if (rightEye) rightEye.style.transform = 'translate(' + (target.x * 8).toFixed(1) + 'px,' + (target.y * 5).toFixed(1) + 'px)';
+      stage.classList.add('is-watching');
       if (!running) { running = true; requestAnimationFrame(loop); }
     }
     function loop() {
-      if (!K.motionOK()) { img.style.transform = shadow.style.transform = ''; running = false; return; }
+      if (!K.motionOK()) { img.style.transform = ''; shadow.style.transform = ''; running = false; return; }
       kairo.x += (target.x - kairo.x) * 0.045; kairo.y += (target.y - kairo.y) * 0.045;
       shad.x += (target.x - shad.x) * 0.25;   shad.y += (target.y - shad.y) * 0.25;
-      img.style.transform = 'translate(' + (kairo.x * -5).toFixed(2) + 'px,' + (kairo.y * -4).toFixed(2) + 'px) scale(1.03) rotate(' + (kairo.x * 0.8).toFixed(2) + 'deg)';
-      shadow.style.transform = 'translate(' + (shad.x * -5 + shad.x * 16).toFixed(2) + 'px,' + (shad.y * -4 + 10).toFixed(2) + 'px) scale(1.03) rotate(' + (shad.x * 0.8).toFixed(2) + 'deg)';
+      img.style.transform = 'translate(' + (kairo.x * -5).toFixed(2) + 'px,' + (kairo.y * -4).toFixed(2) + 'px) rotate(' + (kairo.x * 0.8).toFixed(2) + 'deg)';
+      shadow.style.transform = 'translate(' + (shad.x * 10).toFixed(2) + 'px,' + (shad.y * 4 + 4).toFixed(2) + 'px) skewX(-12deg)';
       var still = Math.abs(target.x - kairo.x) < 0.002 && Math.abs(target.y - kairo.y) < 0.002;
       if (still) { running = false; } else requestAnimationFrame(loop);
     }
     stage.addEventListener('pointermove', function (e) { move(e.clientX, e.clientY); });
     stage.addEventListener('pointerdown', function (e) { move(e.clientX, e.clientY); });
-    stage.addEventListener('pointerleave', function () { target.x = 0; target.y = 0; if (!running) { running = true; requestAnimationFrame(loop); } });
-    shadow.style.transform = 'translate(0px,10px) scale(1.03)';
+    stage.addEventListener('pointerleave', function () { target.x = 0; target.y = 0; stage.classList.remove('is-watching'); if (leftEye) leftEye.style.transform = ''; if (rightEye) rightEye.style.transform = ''; if (!running) { running = true; requestAnimationFrame(loop); } });
+    shadow.style.transform = 'translate(0px,4px) skewX(-12deg)';
+    /* Kairo blinks like a living character, not a static illustration. */
+    if (K.motionOK()) { (function blink(){ var wait = 2200 + Math.random() * 3200; setTimeout(function(){ if (!document.hidden && K.motionOK()) { img.classList.add('blink'); setTimeout(function(){ img.classList.remove('blink'); }, 140); } blink(); }, wait); })(); }
+
+    /* Character-specific sound cue; audio is opt-in and generated locally. */
+    var listen = K.$('#kairoListen');
+    if (listen) listen.addEventListener('click', function () {
+      if (!K.settings.sound) {
+        K.toast('Turn sound on first', 'Use the Sound toggle in the top settings bar; audio stays off until you choose it.');
+        return;
+      }
+      K.sound.play('whisper'); K.sound.play('tick');
+      listen.classList.add('is-playing'); setTimeout(function(){ listen.classList.remove('is-playing'); }, 650);
+      K.toast('The lantern answers', 'A soft, time-bent chime from Kairo’s world.');
+    });
 
     /* three-click Easter egg on the lantern star */
     var egg = K.$('#eggStar'), n = 0, timer;

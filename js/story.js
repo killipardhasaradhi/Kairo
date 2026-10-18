@@ -407,8 +407,9 @@
       area.appendChild(E('div', { class: 'row' }, next, alt)); next.focus({ preventScroll: true });
     }
     function altEnding(viewOnly) {
+      if (!viewOnly) { K.store.set('resetEnding', true); K.store.set('memoryEnding', false); K.store.set('free', false); }
       K.clear(area);
-      var back = E('button', { type: 'button', class: 'btn small' }, viewOnly ? 'Back' : 'Return to the tower');
+      var back = E('button', { type: 'button', class: 'btn small' }, viewOnly ? 'Back to the tower' : 'Return to the tower');
       back.addEventListener('click', function () { if (state.free) finished(); else choose(); });
       area.appendChild(E('div', { class: 'alt-end' },
         E('h4', { text: 'Alternate ending: the loop continues' }),
@@ -417,8 +418,23 @@
         state.resets >= 2 ? E('p', { class: 'small-note', text: 'The star on the lantern was never random. Look at it again.' }) : null));
       area.appendChild(back); back.focus({ preventScroll: true });
     }
+    function memoryEnding() {
+      K.store.set('memoryEnding', true); K.store.set('resetEnding', false); K.store.set('free', false);
+      K.clear(area);
+      area.appendChild(E('div', { class: 'alt-end memory-ending' },
+        E('p', { class: 'kicker', text: 'ENDING 02 · THE MEMORY KEEPER' }),
+        E('h4', { text: 'Kairo keeps the memory' }),
+        E('p', { text: 'Kairo reaches for the thirteenth mark, but does not ring the bell. Instead, the lantern opens and releases a small golden memory: the face of the friend whose dream began the loop.' }),
+        E('p', { text: 'For one impossible moment, Kairo remembers everything. The town still repeats its minute—but now Kairo knows exactly whom the loop was built to protect, and why the warning was written.' }),
+        E('p', { class: 'final-msg', text: 'The memory survives. Tomorrow is still waiting.' })
+      ));
+      var back = E('button', { type: 'button', class: 'btn small' }, 'Return to the tower');
+      back.addEventListener('click', choose);
+      area.appendChild(back);
+      K.toast('Memory preserved', 'You can return to the tower and choose a different path.');
+    }
     function open() {
-      state.free = true; K.store.set('free', true);
+      state.free = true; K.store.set('free', true); K.store.set('memoryEnding', false); K.store.set('resetEnding', false);
       K.clear(area);
       if (K.motionOK()) bell.classList.add('ring');
       mk.classList.add('done'); mk.setAttribute('aria-label', 'All thirteen marks lit');
@@ -435,9 +451,11 @@
       K.clear(area);
       var A = E('button', { type: 'button', class: 'choice' }, E('strong', { text: 'Reset the clock' }), E('span', { text: 'Keep the worlds protected. Keep the loop.' }));
       var B = E('button', { type: 'button', class: 'choice' }, E('strong', { text: 'Open the thirteenth minute' }), E('span', { text: 'Let go of the memory holding the loop. Let tomorrow arrive, with no guarantees.' }));
+      var C = E('button', { type: 'button', class: 'choice' }, E('strong', { text: 'Keep the lost memory' }), E('span', { text: 'Protect the memory of Kairo’s friend, even if the town must keep repeating.' }));
       A.addEventListener('click', function () { state.resets++; altEnding(false); });
       B.addEventListener('click', open);
-      area.appendChild(E('div', { class: 'choices' }, A, B));
+      C.addEventListener('click', memoryEnding);
+      area.appendChild(E('div', { class: 'choices' }, A, B, C));
     }
     say('Kairo reaches the clock tower. The thirteenth bell waits above the repeating town.');
     say('This is the moment earlier versions of Kairo feared, warned about, or tried to prevent.');
@@ -498,7 +516,7 @@
   function show(i, focusTitle) {
     if (cleanup) { cleanup(); cleanup = null; }
     state.idx = i; var sc = SCENES[i];
-    state.visited[sc.id] = true; K.store.set('visited', state.visited);
+    state.visited[sc.id] = true; K.store.set('visited', state.visited); document.dispatchEvent(new CustomEvent('kairo:scene', { detail: sc.id }));
     renderSteps();
     var root = K.clear(K.$('#sceneRoot'));
     var narr = E('div', { class: 'narration', 'aria-live': 'polite' });
@@ -525,7 +543,12 @@
     updateTodo();
     document.addEventListener('kairo:clue', updateTodo);
     leaves.push(function () { document.removeEventListener('kairo:clue', updateTodo); });
+    var progress = E('div', { class: 'scene-progress', 'aria-label': 'Story progress' },
+      E('div', { class: 'scene-progress-label' }, E('span', { text: 'YOUR INVESTIGATION' }), E('strong', { text: 'Scene ' + (i + 1) + ' of ' + SCENES.length })),
+      E('div', { class: 'scene-progress-track', role: 'progressbar', 'aria-valuemin': '1', 'aria-valuemax': String(SCENES.length), 'aria-valuenow': String(i + 1), 'aria-label': 'Story scene progress' }, E('span', { style: { width: (((i + 1) / SCENES.length) * 100) + '%' } }))
+    );
     root.appendChild(E('article', { class: 'scene', 'aria-labelledby': 'sceneTitle' },
+      progress,
       E('header', { class: 'scene-head' }, E('p', { class: 'kicker', text: sc.kicker }), title),
       todo,
       stage, narr,
@@ -539,10 +562,15 @@
   K.story.go = function (idOrIdx) {
     var i = typeof idOrIdx === 'number' ? idOrIdx : BY_ID[idOrIdx];
     if (i === undefined) return;
+    var destination = SCENES[i] && SCENES[i].id ? SCENES[i].id : idOrIdx;
+    if (destination === 'prologue') K.sound.play('tick');
+    else if (destination === 'stillhour' || destination === 'workshop') K.sound.play('whisper');
+    else if (destination === 'library' || destination === 'mirror' || destination === 'truth' || destination === 'tower') K.sound.play('ominous');
+    else if (destination === 'epilogue') K.sound.play('reveal');
     show(i, true);
   };
 
-  document.addEventListener('kairo:reset', function () { state.trust = null; state.free = false; state.visited = {}; K.store.del('trust'); K.store.del('free'); K.store.del('visited'); show(0, false); });
+  document.addEventListener('kairo:reset', function () { state.trust = null; state.free = false; state.visited = {}; K.store.del('trust'); K.store.del('free'); K.store.del('visited'); K.store.del('resetEnding'); K.store.del('memoryEnding'); show(0, false); });
 
   function boot() { show(0, false); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
