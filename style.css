@@ -134,7 +134,7 @@ ul { padding-left: 1.2rem; }
   box-shadow: 0 3px 0 #6f5212, 0 8px 18px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .6);
   transition: transform .12s, box-shadow .12s, filter .12s;
 }
-.btn:hover { color: #1a1500; transform: translateY(-1px); filter: brightness(1.06); }
+.btn:hover { color: #1a1500; filter: brightness(1.06); }
 .btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #6f5212, inset 0 1px 0 rgba(255, 255, 255, .4); }
 .btn.ghost {
   background: transparent; color: var(--gold); border: 2px solid var(--gold);
@@ -227,7 +227,7 @@ html[data-theme="twilight"] .kairo-img { filter: saturate(1.15) brightness(1.12)
 }
 .tabs button[aria-selected="true"] { color: #1a1500; background: var(--gold); border-color: var(--gold); }
 .expr-main { display: flex; gap: 1rem; align-items: center; margin-bottom: .9rem; }
-.expr-main img { width: 156px; height: auto; border-radius: 12px; border: 2px solid var(--gold); box-shadow: 0 0 20px rgba(242, 199, 104, .35); }
+.expr-main img { width: 220px; height: 220px; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 12px; border: 2px solid var(--gold); box-shadow: 0 0 20px rgba(242, 199, 104, .35); }
 .expr-name { font-family: var(--display); font-size: 1.4rem; color: var(--gold); margin: 0; }
 .expr-note { color: var(--muted); margin: 0; }
 .expr-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
@@ -235,7 +235,7 @@ html[data-theme="twilight"] .kairo-img { filter: saturate(1.15) brightness(1.12)
   display: grid; justify-items: center; gap: .25rem; padding: .35rem; cursor: pointer;
   background: var(--bg2); color: var(--ink); border: 2px solid transparent; border-radius: 10px; font: 700 .85rem var(--body);
 }
-.expr-picker button img { width: 68px; height: auto; border-radius: 8px; }
+.expr-picker button img { width: 68px; height: 68px; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 8px; }
 .expr-picker button[aria-pressed="true"] { border-color: var(--gold); background: var(--panel2); }
 .turn-grid { display: flex; gap: .6rem; justify-content: center; align-items: flex-end; flex-wrap: wrap; }
 .turn-grid figure { margin: 0; text-align: center; }
@@ -410,7 +410,7 @@ html[data-theme="twilight"] .kairo-img { filter: saturate(1.15) brightness(1.12)
 .pc-desc { font-size: .93rem; color: var(--muted); }
 .pc-go { font: 800 .85rem var(--body); color: var(--cyan); }
 .pc-go::after { content: " \2192"; }
-.proj-card:hover { transform: translateY(-2px); border-color: var(--gold); }
+.proj-card:hover { border-color: var(--gold); }
 .proj-card[aria-selected="true"] { border-color: var(--gold); background: var(--panel2); box-shadow: 0 0 0 2px var(--gold), 0 0 24px rgba(242, 199, 104, .3); }
 .proj-card[aria-selected="true"] .pc-go { font-size: 0; }
 .proj-card[aria-selected="true"] .pc-go::before { content: "Showing below"; font: 800 .85rem var(--body); }
@@ -567,7 +567,7 @@ html.reduce-motion .marquee-track { animation: none !important; }
   .loop-grid, .choices { grid-template-columns: 1fr; }
   .drawings { grid-template-columns: 1fr; max-width: 260px; }
   .expr-main { flex-direction: column; text-align: center; }
-  .expr-main img { width: 128px; }
+  .expr-main img { width: 200px; height: 200px; }
   .stage { margin: .5rem .6rem; padding: .8rem; }
   .scene-head, .narration, .scene-nav { padding-left: .8rem; padding-right: .8rem; }
   .block { padding-top: 2.4rem; }
@@ -609,3 +609,12 @@ body.chaos .eyebrow::after { content: " \2605 \2605"; }
   body.chaos .hero { grid-template-columns: 1fr 1.1fr; }
   body.chaos .kairo-stage { transform: rotate(-2deg); }
 }
+
+/* how-to-play + per-scene guidance */
+.howto { margin: 1rem 0 1.2rem; padding: 1rem 1.2rem; border: 2px solid var(--gold); border-radius: 14px; background: var(--panel2, rgba(20, 24, 70, .9)); }
+.howto h3 { margin: 0 0 .5rem; color: var(--gold); }
+.howto ol { margin: 0; padding-left: 1.25rem; display: grid; gap: .4rem; }
+.howto li { line-height: 1.5; }
+.todo { margin: .6rem 0 .8rem; padding: .7rem .9rem; border-left: 4px solid var(--cyan); background: rgba(93, 232, 245, .1); border-radius: 0 10px 10px 0; line-height: 1.5; }
+.todo strong { color: var(--cyan); }
+.todo-count { display: inline-block; color: var(--gold); font-weight: 700; }
