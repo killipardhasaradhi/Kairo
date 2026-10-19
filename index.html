@@ -32,16 +32,21 @@
       <button class="tool" id="tgSound" type="button" aria-pressed="false" title="Turn click sounds on or off (off by default)"><span aria-hidden="true">&#128263;</span><span class="tool-label">Sound off</span></button>
       <button class="tool" id="tgMotion" type="button" aria-pressed="false" title="Reduce or restore animation"><span aria-hidden="true">&#127916;</span><span class="tool-label">Motion on</span></button>
       <button class="tool" id="tgSparkle" type="button" aria-pressed="true" title="Sparkle cursor (mouse only)"><span aria-hidden="true">&#10024;</span><span class="tool-label">Sparkle on</span></button>
+      <button class="tool" id="tgLight" type="button" aria-pressed="false" title="Flashlight mode: darkens the page except around your pointer"><span aria-hidden="true">&#128294;</span><span class="tool-label">Flashlight off</span></button>
+      <button class="tool" id="tgCalm" type="button" aria-pressed="false" title="Calm mode: removes every timed moment and countdown"><span aria-hidden="true">&#127807;</span><span class="tool-label">Calm off</span></button>
+      <span class="vol" id="volWrap" hidden><label for="vol" class="sr">Volume</label><input id="vol" type="range" min="0" max="100" value="70"></span>
       <button class="tool" id="tgChaos" type="button" aria-pressed="false" title="Responsive Chaos Mode: full early-web personality"><span aria-hidden="true">&#127752;</span><span class="tool-label">Chaos off</span></button>
-      <button class="tool" id="tgFlashlight" type="button" aria-pressed="false" title="Toggle investigation lantern light"><span aria-hidden="true">&#128374;</span><span class="tool-label">Lantern off</span></button>
     </div>
   </div>
   <nav class="main-nav" aria-label="Main">
     <a href="#landing">Home</a>
     <a href="#meet">Meet Kairo</a>
     <a href="#story">Explore the story</a>
+    <a href="#delivery">Route</a>
     <a href="#portfolio">Portfolio</a>
+    <a href="#lab">Dream Lab</a>
     <a href="#notebook">Notebook <span class="badge" id="navBadge" aria-label="clues found">0</span></a>
+    <a href="#archive">Map &amp; Report</a>
     <a href="#guestbook">Guestbook</a>
   </nav>
 </header>
@@ -55,12 +60,10 @@
     <h1 id="heroTitle"><span class="h1-name">Kairo</span><span class="h1-sub">Someone Is Resetting Tomorrow</span></h1>
     <p class="tagline">&ldquo;Yesterday left me a warning.<br>Tomorrow left me a trap.&rdquo;</p>
     <div class="cta-row">
-      <a class="btn" href="#story" id="ctaExplore">Start the mystery <span aria-hidden="true">→</span></a>
-      <a class="btn ghost" href="#howto" id="ctaHowto">How to play</a>
-      <a class="btn ghost" href="#portfolio" id="ctaPortfolio">View inventions</a>
+      <a class="btn" href="#story" id="ctaExplore">Explore Kairo's World</a>
+      <a class="btn ghost" href="#portfolio" id="ctaPortfolio">View Portfolio</a>
     </div>
-    <p class="mini-note">New here? No puzzle-solving experience needed. The website tells you what to tap at every step.</p>
-    <button type="button" class="btn ghost small" id="heroClockHold" style="margin-top:0.7rem;">&#9201; Press &amp; Hold Clock to Rewind Time</button>
+    <p class="mini-note">Short on time? <a href="#meet">Meet Kairo</a> or <a href="#portfolio">jump straight to the three inventions</a>. You never have to finish the story to see them.</p>
     <div class="lantern-clock" role="img" aria-label="The lantern's clock. It has no hands, and its marker is ticking backward.">
       <svg viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
         <circle cx="60" cy="60" r="54" class="lc-rim"/>
@@ -75,56 +78,12 @@
 
   <figure class="hero-art">
     <div class="kairo-stage" id="kairoStage">
-      <div class="kairo-shadow-shape" id="kairoShadow" aria-hidden="true"></div>
-      <svg class="kairo-character" id="kairoImg" viewBox="0 0 560 500" role="img" aria-labelledby="kairoSvgTitle kairoSvgDesc" xmlns="http://www.w3.org/2000/svg">
-        <title id="kairoSvgTitle">Kairo, the Last Dream Wanderer</title><desc id="kairoSvgDesc">An animated, original hooded dream wanderer with a midnight-blue cloak, glowing gold eyes, translucent cyan and violet ears, and a brass lantern with a handless clock. The eyes follow your pointer.</desc>
-        <defs>
-          <radialGradient id="kairoAura"><stop stop-color="#7166ff" stop-opacity=".38"/><stop offset="1" stop-color="#11183f" stop-opacity="0"/></radialGradient>
-          <linearGradient id="kairoCloak" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#344a9d"/><stop offset=".48" stop-color="#141b50"/><stop offset="1" stop-color="#080d2a"/></linearGradient>
-          <linearGradient id="kairoHood" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5269c8"/><stop offset=".55" stop-color="#20275f"/><stop offset="1" stop-color="#111637"/></linearGradient>
-          <linearGradient id="kairoEar"><stop stop-color="#5de8f5" stop-opacity=".85"/><stop offset="1" stop-color="#a98bff" stop-opacity=".55"/></linearGradient>
-          <radialGradient id="kairoEye"><stop stop-color="#fff8bf"/><stop offset=".4" stop-color="#ffd85c"/><stop offset="1" stop-color="#ff9b30"/></radialGradient>
-          <linearGradient id="kairoBrass"><stop stop-color="#76501c"/><stop offset=".45" stop-color="#ffdf83"/><stop offset="1" stop-color="#9c6b24"/></linearGradient>
-          <filter id="kairoGlow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        </defs>
-        <ellipse cx="280" cy="445" rx="205" ry="28" fill="#030617" opacity=".65"/>
-        <ellipse cx="280" cy="255" rx="230" ry="230" fill="url(#kairoAura)"/>
-        <g class="kairo-float" id="kairoCharacterMotion">
-          <!-- translucent mismatched ears -->
-          <path d="M179 174 Q115 112 105 48 Q169 76 211 158Z" fill="url(#kairoEar)" stroke="#69f2ff" stroke-width="3"/><path d="M190 158 L133 78 L187 173Z" fill="#c1ffff" opacity=".38"/>
-          <path d="M353 164 Q405 80 454 66 Q446 139 382 192Z" fill="url(#kairoEar)" stroke="#bba0ff" stroke-width="3"/><path d="M372 174 L426 94 L388 184Z" fill="#f2eaff" opacity=".3"/>
-          <!-- cloak body -->
-          <path d="M185 248 Q137 292 133 408 Q199 451 284 447 Q366 450 429 407 Q421 306 365 247Z" fill="url(#kairoCloak)" stroke="#5866bd" stroke-width="4"/>
-          <path d="M201 287 Q226 345 205 431 M352 285 Q330 356 365 429" fill="none" stroke="#6c79ce" stroke-width="3" opacity=".65"/>
-          <path d="M166 386 Q280 421 399 385 L428 408 Q350 464 199 445 L133 408Z" fill="#0a1034" opacity=".7"/>
-          <!-- hood and face -->
-          <path d="M164 210 Q153 95 272 83 Q387 86 397 211 L370 294 Q281 344 190 292Z" fill="url(#kairoHood)" stroke="#6878d0" stroke-width="5"/>
-          <path d="M184 207 Q188 117 278 111 Q365 115 376 207 Q342 255 281 265 Q221 252 184 207Z" fill="#080d25" stroke="#3c4a91" stroke-width="3"/>
-          <!-- star tip -->
-          <path d="M272 92 L285 55 L296 91 L329 82 L307 108 L317 132 L284 118 L259 133 L266 108 L243 91Z" fill="#5de8f5" stroke="#d6ffff" stroke-width="2" filter="url(#kairoGlow)"/>
-          <!-- eyes -->
-          <g class="kairo-eye" id="kairoEyeLeft"><ellipse cx="236" cy="202" rx="25" ry="30" fill="url(#kairoEye)" filter="url(#kairoGlow)"/><ellipse cx="236" cy="202" rx="8" ry="18" fill="#17122b"/><circle cx="229" cy="192" r="6" fill="#fffde5"/></g>
-          <g class="kairo-eye" id="kairoEyeRight"><ellipse cx="324" cy="202" rx="25" ry="30" fill="url(#kairoEye)" filter="url(#kairoGlow)"/><ellipse cx="324" cy="202" rx="8" ry="18" fill="#17122b"/><circle cx="317" cy="192" r="6" fill="#fffde5"/></g>
-          <path d="M260 247 Q280 255 300 246" fill="none" stroke="#6e7bc3" stroke-width="3" stroke-linecap="round"/>
-          <path d="M192 177 Q235 156 263 175 M303 175 Q332 157 367 178" fill="none" stroke="#111737" stroke-width="11" stroke-linecap="round"/>
-          <!-- lantern arm and brass lantern -->
-          <path d="M365 302 Q404 300 421 328" fill="none" stroke="#20295e" stroke-width="24" stroke-linecap="round"/>
-          <g id="kairoLantern" transform="translate(404 300) rotate(8)">
-            <path d="M-24 0 Q0 -29 24 0" fill="none" stroke="#f2c768" stroke-width="6"/><path d="M-29 8 L-24 91 Q0 111 24 91 L29 8Z" fill="#372e36" stroke="url(#kairoBrass)" stroke-width="6"/>
-            <path d="M-18 18 L-15 82 Q0 95 15 82 L18 18Z" fill="#5de8f5" opacity=".28"/>
-            <circle cx="0" cy="51" r="25" fill="#0a1231" stroke="#f2c768" stroke-width="4"/>
-            <circle cx="0" cy="51" r="18" fill="none" stroke="#d6b25c" stroke-width="1.5" stroke-dasharray="2 6"/>
-            <circle cx="0" cy="51" r="4" fill="#fff0a5" filter="url(#kairoGlow)"/>
-            <path d="M-14 5 L-18 -6 L18 -6 L14 5" fill="#b98a22" stroke="#f2c768" stroke-width="3"/>
-            <path d="M-8 104 L0 114 L8 104" fill="none" stroke="#f2c768" stroke-width="3"/>
-          </g>
-          <g class="kairo-spark" fill="#f7dc89" filter="url(#kairoGlow)"><path d="M124 260 l5 14 14 5 -14 5 -5 14 -5 -14 -14 -5 14 -5Z"/><path d="M420 204 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4Z"/><circle cx="151" cy="320" r="4"/><circle cx="405" cy="257" r="3"/></g>
-        </g>
-      </svg>
-      <button class="kairo-listen" id="kairoListen" type="button" aria-label="Hear Kairo’s mysterious lantern sound" title="Hear Kairo’s lantern">♫ <span>Hear Kairo</span></button>
+      <img class="kairo-shadow" id="kairoShadow" src="assets/kairo-clean.jpg" alt="" aria-hidden="true" width="556" height="492">
+      <img class="kairo-img" id="kairoImg" src="assets/kairo-clean.jpg" alt="Kairo, a small hooded wanderer with a flowing midnight-blue cloak, glowing golden eyes, translucent cyan and violet ears, and a brass lantern holding a clock with no hands." width="556" height="492" fetchpriority="high">
       <button class="egg-star" id="eggStar" type="button" aria-label="A small star with one missing point, glowing on the lantern"><svg viewBox="-12 -12 24 24" aria-hidden="true"><path id="eggStarPath" d=""/></svg></button>
     </div>
-    <figcaption>Kairo is drawn in live SVG, not a character image. <span class="cap-sub">Move your pointer and watch the eyes follow. Tap the lantern sound button to hear the mystery.</span></figcaption>
+    <div class="mood-chip" id="moodChip" aria-live="polite"><img id="moodImg" src="assets/expr-determined.jpg" alt="" width="44" height="44"><span id="moodText">Kairo feels determined (night)</span></div>
+    <figcaption>Watch the shadow. It moves first. <span class="cap-sub">(Move your mouse or tap and drag on the picture.)</span></figcaption>
   </figure>
 </section>
 
@@ -202,70 +161,6 @@
   </ul>
 </section>
 
-<!-- Optional interactive playground: explains each activity before asking visitors to try it. -->
-<section id="living-world" class="block living-world" aria-labelledby="livingTitle">
-  <div class="block-head">
-    <p class="eyebrow">Optional discoveries · no experience needed</p>
-    <h2 id="livingTitle">Try Kairo's strange abilities</h2>
-    <p class="lede">These are small, self-contained experiments. Read the instruction on each card, try it, and follow the result. You can skip all of them and enjoy the main story.</p>
-  </div>
-  <div class="living-welcome panel" aria-live="polite">
-    <div class="living-orb" aria-hidden="true">✦</div>
-    <div class="living-welcome-copy"><strong id="kairoMoodTitle">Kairo is curious about you.</strong><p id="kairoMoodText">Move your pointer over Kairo, or tap the character on a phone. The eyes follow your movement. Nothing is being recorded or sent anywhere.</p></div>
-    <div class="kairo-ask"><label for="kairoQuestion">Ask Kairo</label><select id="kairoQuestion"><option value="why">Why is tomorrow resetting?</option><option value="shadow">Why does your shadow move first?</option><option value="trust">Who should I trust?</option><option value="clues">Do I need every clue?</option><option value="scared">Are you afraid?</option></select><button class="btn small ghost" id="kairoReact" type="button">Ask</button></div>
-  </div>
-  <div class="lab-grid">
-    <article class="panel lab-card" aria-labelledby="timeLabTitle">
-      <div class="lab-icon" aria-hidden="true">◷</div><p class="eyebrow">Experiment 1</p><h3 id="timeLabTitle">Rewind the minute</h3>
-      <p>Tap <strong>Move time</strong> to travel through three moments. Look for the detail that changes between loops.</p>
-      <div class="timeline-visual" id="timelineVisual" aria-live="polite"><span class="timeline-dot">1</span><span class="timeline-line"></span><span class="timeline-dot">2</span><span class="timeline-line"></span><span class="timeline-dot">3</span></div>
-      <p class="lab-result" id="timelineResult">Moment 1: the clock ticks backward. Ready when you are.</p>
-      <div class="lab-actions"><button class="btn small" id="timeStep" type="button">Move time</button><button class="btn small ghost" id="timeReset" type="button">Start over</button></div>
-      <p class="small-note">This is a story puzzle, not a real timer.</p>
-    </article>
-    <article class="panel lab-card" aria-labelledby="mirrorLabTitle">
-      <div class="lab-icon" aria-hidden="true">◇</div><p class="eyebrow">Experiment 2</p><h3 id="mirrorLabTitle">The mirror that lies</h3>
-      <p>The reflection does something impossible. Choose what you think happened. You can try again without losing progress.</p>
-      <div class="mirror-stage" id="mirrorStage" aria-label="A simple animated mirror puzzle"><span class="mirror-person">K</span><span class="mirror-divider"></span><span class="mirror-person mirror-echo">K</span></div>
-      <div class="lab-actions mirror-choices" role="group" aria-label="Mirror puzzle answers"><button class="btn small ghost" type="button" data-mirror-answer="light">The light changed</button><button class="btn small ghost" type="button" data-mirror-answer="shadow">The shadow moved first</button><button class="btn small ghost" type="button" data-mirror-answer="nothing">Nothing changed</button></div>
-      <p class="lab-result" id="mirrorResult" aria-live="polite">Hint: remember Kairo's unusual shadow.</p>
-    </article>
-    <article class="panel lab-card" aria-labelledby="terminalTitle">
-      <div class="lab-icon" aria-hidden="true">⌘</div><p class="eyebrow">Experiment 3</p><h3 id="terminalTitle">A message from tomorrow</h3>
-      <p>A broken terminal left a six-letter warning. Enter the word Kairo's shadow keeps trying to tell you.</p>
-      <div class="terminal-screen"><span class="terminal-label">INCOMING · TOMORROW</span><p class="terminal-message">S _ A D _ W</p><label for="terminalAnswer">Your answer</label><input id="terminalAnswer" type="text" maxlength="20" autocomplete="off" placeholder="Type the hidden word"><button class="btn small" id="terminalSubmit" type="button">Decode message</button></div>
-      <p class="lab-result" id="terminalResult" aria-live="polite">Hint: the word describes the thing that moves one second early.</p>
-    </article>
-    <article class="panel lab-card" aria-labelledby="mapTitle">
-      <div class="lab-icon" aria-hidden="true">✧</div><p class="eyebrow">Experiment 4</p><h3 id="mapTitle">Map of the mystery</h3>
-      <p>Choose a place to jump to that part of the story. Your saved clues stay in the notebook.</p>
-      <div class="mystery-map" role="group" aria-label="Choose a story location">
-        <button type="button" data-scene-jump="prologue"><span>✦</span> Lantern</button><button type="button" data-scene-jump="stillhour"><span>◷</span> Stillhour</button><button type="button" data-scene-jump="workshop"><span>⌁</span> Workshop</button><button type="button" data-scene-jump="library"><span>▤</span> Library</button><button type="button" data-scene-jump="mirror"><span>◇</span> Mirror</button><button type="button" data-scene-jump="tower"><span>♜</span> Clock Tower</button>
-      </div>
-      <p class="small-note">You can revisit places at any time. The map does not spoil the ending.</p>
-    </article>
-    <article class="panel lab-card" aria-labelledby="theoryTitle">
-      <div class="lab-icon" aria-hidden="true">✎</div><p class="eyebrow">Your detective theory</p><h3 id="theoryTitle">What do you think is happening?</h3>
-      <p>Write a theory while you investigate. It is saved only in this browser, so it stays private on this device.</p>
-      <label for="theoryText">My theory <span class="opt">(up to 500 characters)</span></label><textarea id="theoryText" maxlength="500" rows="4" placeholder="I think the clock is resetting because…"></textarea>
-      <div class="lab-actions"><button class="btn small" id="saveTheory" type="button">Save theory</button><button class="btn small ghost" id="clearTheory" type="button">Clear</button></div>
-      <p class="lab-result" id="theoryResult" aria-live="polite">Your notes stay on this device. You can change them at any time.</p>
-    </article>
-    <article class="panel lab-card" aria-labelledby="caseTitle">
-      <div class="lab-icon" aria-hidden="true">▤</div><p class="eyebrow">Your journey</p><h3 id="caseTitle">Create a case report</h3>
-      <p>Make a little summary of your discoveries and choices. You can copy it or share it after you finish.</p>
-      <div class="case-stats"><div><strong id="caseClues">0</strong><span>clues found</span></div><div><strong id="caseScenes">0</strong><span>places visited</span></div><div><strong id="caseEnding">Open</strong><span>ending status</span></div></div>
-      <div class="lab-actions"><button class="btn small" id="makeReport" type="button">Build my report</button><button class="btn small ghost" id="copyReport" type="button" disabled>Copy report</button></div>
-      <textarea id="caseReport" class="case-report" rows="5" readonly aria-label="Your case report" placeholder="Your report will appear here."></textarea>
-      <p class="small-note">The report includes story progress only, not your name or device details.</p>
-    </article>
-  </div>
-  <div class="ambient-panel panel">
-    <div><p class="eyebrow">Optional atmosphere</p><h3>Hear the world of Kairo</h3><p class="small-note">A gentle, generated clock ambience. It only plays after you start it and stops when you turn it off or mute sound.</p></div>
-    <div class="lab-actions"><button class="btn small" id="ambientToggle" type="button" aria-pressed="false">Start quiet ambience</button><span id="ambientStatus" class="small-note" role="status">Sound is off until you choose it.</span></div>
-  </div>
-</section>
-
 <!-- 3. THE STORY -->
 <section id="story" class="block" aria-labelledby="storyTitle">
   <div class="block-head">
@@ -274,18 +169,54 @@
     <p class="lede">Eight short scenes. Click the glowing clues, collect them in the notebook, and decide what to do with the thirteenth bell.</p>
     <p class="mini-note"><a href="#portfolio">Skip the story and view the portfolio</a> at any time. You can also jump to any scene below.</p>
   </div>
-  <div class="howto" id="howto" role="region" aria-labelledby="howtoTitle">
-    <div class="howto-head"><div><p class="eyebrow">First time here?</p><h3 id="howtoTitle">Your first 30 seconds</h3><p class="howto-intro">Think of this as an interactive storybook. You do not need to guess the answers.</p></div><span class="howto-badge" aria-hidden="true">✦</span></div>
-    <div class="howto-grid">
-      <div class="howto-step"><span class="howto-number">1</span><div><strong>Read the scene</strong><p>Start with the story text at the top.</p></div></div>
-      <div class="howto-step"><span class="howto-number">2</span><div><strong>Tap what glows</strong><p>Follow the blue “What to do here” hint. Tap the clock, bird, drawing or button it names.</p></div></div>
-      <div class="howto-step"><span class="howto-number">3</span><div><strong>Collect clues</strong><p>Clue buttons turn into ✓ when found. They appear in your Detective Notebook.</p></div></div>
-      <div class="howto-step"><span class="howto-number">4</span><div><strong>Continue the story</strong><p>Use the large gold button at the bottom. Missing clues will not block you.</p></div></div>
-    </div>
-    <div class="howto-actions"><a class="btn" href="#sceneRoot" id="startGuidedStory">Start at Scene 1 →</a><button class="btn ghost" type="button" id="readModeToggle" aria-pressed="false">Turn on calm reading mode</button><span class="small-note">Your clues stay on this device in this browser.</span></div>
+  <div class="howto" role="region" aria-label="How to play">
+    <h3>How to explore (30 seconds)</h3>
+    <ol>
+      <li><strong>Go scene by scene.</strong> There are 8 scenes. Use the numbered buttons below, or the big button at the bottom of each scene to move on.</li>
+      <li><strong>Each scene says “What to do here”.</strong> Do exactly what it says. It tells you which things to tap.</li>
+      <li><strong>Gold buttons marked ★ are clues.</strong> Tap one and it is saved in your <strong>Detective Notebook</strong>. A ✓ means you already found it.</li>
+      <li><strong>See your clues any time</strong> with the round lantern button at the bottom-right, or the Notebook link in the menu.</li>
+      <li><strong>You do not have to find every clue.</strong> You can always press the next button and the story still makes sense.</li>
+    </ol>
   </div>
-  <nav class="steps" id="storySteps" aria-label="Story scenes"></nav>
-  <div id="sceneRoot" class="scene-root"></div>
+  <div class="mode-switch" role="group" aria-label="Choose how to read the story">
+    <span class="mode-label">View:</span>
+    <button type="button" id="modeScroll" aria-pressed="true">Scroll view</button>
+    <button type="button" id="modeStep" aria-pressed="false">Step view</button>
+  </div>
+  <div id="scrollWrap" class="scroll-story" hidden>
+    <nav class="rail" id="rail" aria-label="Story chapters">
+      <div class="rail-line" aria-hidden="true"><span id="railFill"></span></div>
+      <ol id="railList"></ol>
+      <p class="rail-now" id="railNow" aria-live="off"></p>
+    </nav>
+    <div id="scrollRoot" class="chapters"></div>
+  </div>
+  <div id="stepWrap" hidden>
+    <nav class="steps" id="storySteps" aria-label="Story scenes"></nav>
+    <div id="sceneRoot" class="scene-root"></div>
+  </div>
+</section>
+
+<!-- 4b. DREAM DELIVERY MAP (SVG path synced with scroll) -->
+<section id="delivery" class="block" aria-labelledby="dvTitle">
+  <div class="block-head">
+    <p class="eyebrow">Journey</p>
+    <h2 id="dvTitle">The Dream Delivery Route</h2>
+    <p class="lede">Scroll down this section and follow Kairo's lantern along the route through every place in the story.</p>
+  </div>
+  <div class="dv-wrap" id="dvWrap">
+    <div class="dv-sticky">
+      <svg id="dvSvg" class="dv-svg" viewBox="0 0 400 900" role="img" aria-label="A winding route connecting the eight story places. A small lantern travels along it as you scroll.">
+        <path id="dvPath" class="dv-path-bg" d="M60 40 C 340 110, 340 190, 90 250 S 60 390, 320 440 S 330 580, 80 640 S 200 800, 330 860"/>
+        <path id="dvDraw" class="dv-path" d="M60 40 C 340 110, 340 190, 90 250 S 60 390, 320 440 S 330 580, 80 640 S 200 800, 330 860"/>
+        <g id="dvStops"></g>
+        <g id="dvLantern" class="dv-lantern"><circle r="16" class="glow"/><circle r="7" class="core"/></g>
+      </svg>
+      <div class="dv-card" id="dvCard" aria-live="polite"><p class="eyebrow" id="dvKick">Stop 1 of 8</p><h3 id="dvName">The lantern</h3><p id="dvText"></p></div>
+    </div>
+    <div class="dv-spacer" aria-hidden="true"></div>
+  </div>
 </section>
 
 <!-- 4. PORTFOLIO -->
@@ -343,20 +274,100 @@
     <p class="small-note" id="nbHint">Tip: use &ldquo;Connect with&hellip;&rdquo; on a clue to test whether two clues belong together.</p>
   </div>
   <div id="nbList" class="nb-list"></div>
+  <div class="panel ar-panel" id="secretsPanel">
+    <h3>Secrets <span id="secCount" class="badge"></span></h3>
+    <p class="small-note">Hidden things you have discovered. Hints appear for the ones you have not. None of them are required to understand the story.</p>
+    <ul id="secList" class="sec-list"></ul>
+  </div>
+  <div class="panel ar-panel" id="theoryPanel">
+    <h3>Theory board</h3>
+    <p class="small-note">Write what you think is happening. Saved only on this device.</p>
+    <form id="thForm" class="cmp-form"><label for="thIn">My theory</label><input id="thIn" maxlength="140" autocomplete="off" placeholder="I think the clockmaker is…"><button class="btn small" type="submit">Add</button></form>
+    <ul id="thList" class="sec-list"></ul>
+  </div>
 </section>
 
-<!-- 5.5 INTERACTIVE SHOWCASE: THE 12 UNFORGETTABLE EXPERIENCES -->
-<section id="interactive-labs" class="block" aria-labelledby="labsTitle">
-  <div class="block-head"><p class="eyebrow">12 Unforgettable Experiences</p><h2 id="labsTitle">Wanderer's Reliquary &amp; Chrono-Labs</h2><p class="lede">Explore Kairo's interactive lantern artifact, compose melodies in the Lullaby Lab, play the time-weave reflex challenge, and converse with the Last Dream Wanderer.</p></div>
-  <div class="living-welcome panel" style="margin-bottom:1.2rem"><div class="living-orb" aria-hidden="true">&#10022;</div><div class="living-welcome-copy"><div id="kairoVisitorGreeting"></div><p id="visitorMemoryText" style="margin-top:.35rem;color:var(--gold);font-family:var(--hand);font-size:1.25rem">“Every step you take in Stillhour leaves an impression in the timeline.”</p></div><div><button type="button" class="btn small ghost" id="freezeParticlesBtn">Freeze Time Particles</button></div></div>
-  <div class="labs-showcase-grid">
-    <article class="panel lab-card"><p class="eyebrow">Interactive Reliquary</p><h3>3D Lantern &amp; Handless Core</h3><p class="small-note">Drag with your mouse or finger to orbit the wireframe artifact.</p><div class="lab-canvas-wrap"><canvas id="artifact3DCanvas" width="280" height="230" aria-label="Interactive rotating wireframe lantern artifact" style="background:rgba(7,10,31,.6);border-radius:12px;border:1px solid var(--line);touch-action:none;max-width:100%"></canvas></div><p class="small-note">Canvas-based pseudo-3D wireframe; no external library or server required.</p></article>
-    <article class="panel lab-card"><p class="eyebrow">Acoustic Lab</p><h3>Lullaby Music Box</h3><p class="small-note">Synthesised with the Web Audio API. Enable site sound first.</p><div class="lullaby-chimes-row"><button type="button" class="btn small ghost lullaby-bell" data-note="0">C5</button><button type="button" class="btn small ghost lullaby-bell" data-note="1">D5</button><button type="button" class="btn small ghost lullaby-bell" data-note="2">E5</button><button type="button" class="btn small ghost lullaby-bell" data-note="3">G5</button><button type="button" class="btn small ghost lullaby-bell" data-note="4">A5</button></div><div class="centered"><button type="button" class="btn small" id="lullabyPlayBtn">Play Kairo’s Lullaby</button></div></article>
-    <article class="panel lab-card"><p class="eyebrow">Timeline Reflex</p><h3>Time-Weave Mini-Game</h3><p class="small-note">Catch drifting memory shards before the 30-second loop collapses.</p><div class="lab-canvas-wrap"><canvas id="gameCanvas" width="280" height="180" aria-label="Catch the falling memory shards game" style="background:#070a1f;border-radius:12px;border:1px solid var(--line);touch-action:none;max-width:100%"></canvas></div><div class="game-stats"><span id="gameScoreDisplay">Score: 0</span><span id="gameTimerDisplay">Time: 30s</span></div><p id="gameResultDisplay" class="small-note">Move the gold lantern bar to catch falling shards.</p><button type="button" class="btn small" id="gameStartBtn">Start Weave Challenge</button></article>
-    <article class="panel lab-card"><p class="eyebrow">Chrono-Terminal</p><h3>Message from Tomorrow</h3><p class="small-note">Decode the encrypted signal with a timeline keyword.</p><div class="lab-stack"><input id="chronoInput" aria-label="Temporal key" placeholder="Enter key (e.g. SHADOW)"><button type="button" id="chronoDecryptBtn" class="btn small">Decrypt Transmission</button></div><p id="chronoResult" class="lab-result">Transmission locked: Enter cipher key.</p></article>
-    <article class="panel lab-card"><p class="eyebrow">Investigation Dossier</p><h3>Generate Personal Case Dossier</h3><p class="small-note">Compile your investigation path and connected deductions into a local report.</p><button type="button" class="btn small" id="makeDossierBtn">Compile Personal Dossier</button><textarea id="dossierOutput" rows="6" readonly aria-label="Generated personal case dossier" style="width:100%;margin-top:.8rem;background:rgba(5,8,27,.85);color:#73ffd1;font-family:monospace;font-size:.82rem;padding:.6rem;border-radius:8px;border:1px solid var(--line);display:none"></textarea><p class="small-note">Generated in this browser; copy it yourself if you want to share it.</p></article>
-    <article class="panel lab-card"><p class="eyebrow">Archive Riddle</p><h3>Secret Mystery Riddle</h3><p class="small-note">“What survived when all else was forgotten?”</p><div class="lab-stack"><input id="riddleAnswerInput" aria-label="Riddle answer" placeholder="Your answer (hint: M _ _ _ _ Y)"><button type="button" id="riddleSubmitBtn" class="btn small">Submit Answer</button></div><div class="meter" style="margin:.6rem 0"><span id="communityMeterFill" style="width:75%;display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--gold))"></span></div><p id="riddleResult" class="small-note">This is a local puzzle; results are not shared worldwide.</p></article>
-    <article class="panel lab-card chat-card"><p class="eyebrow">Character Interaction</p><h3>Speak with Kairo</h3><p class="small-note">A local rule-based dialogue engine, not an online AI service.</p><div id="chatLog" role="log" aria-live="polite"><div class="chat-bubble kairo">“Yesterday left me a warning. Ask me about Stillhour, my lantern, or the thirteenth bell.”</div></div><div class="chat-chips"><button type="button" class="btn small ghost chat-chip" data-ask="Why does your shadow move first?">Shadow Anomaly</button><button type="button" class="btn small ghost chat-chip" data-ask="Tell me about the lantern clock">Lantern Clock</button><button type="button" class="btn small ghost chat-chip" data-ask="What is the thirteenth bell?">13th Bell</button><button type="button" class="btn small ghost chat-chip" data-ask="Why is Stillhour repeating?">Repeating Minute</button><button type="button" class="btn small ghost chat-chip" data-ask="Who are you?">The Veyling</button></div><div class="chat-input-row"><input id="chatInput" aria-label="Ask Kairo a question" placeholder="Ask Kairo a question..."><button type="button" id="chatSendBtn" class="btn small">Ask Kairo</button></div></article>
+<!-- 5c. DREAM LAB -->
+<section id="lab" class="block" aria-labelledby="labTitle">
+  <div class="block-head">
+    <p class="eyebrow">Playground</p>
+    <h2 id="labTitle">The Dream Lab</h2>
+    <p class="lede">A 3D Kairo, a lullaby music box, a flashlight for the dark, a game, and a chance to talk to Kairo.</p>
+  </div>
+
+  <div class="panel lab-panel" id="threeD">
+    <h3>Kairo in 3D</h3>
+    <p class="small-note">Drag (or swipe) to turn her. Pinch with two fingers, or press + and −, to zoom. Arrow keys also rotate. It is drawn live with WebGL.</p>
+    <div class="gl-wrap"><canvas id="glKairo" width="640" height="460" tabindex="0" aria-label="A 3D model of Kairo you can rotate with your mouse, finger or arrow keys"></canvas><p class="gl-fallback" id="glFail" hidden>Your browser cannot show WebGL right now, so the 3D view is switched off. Everything else still works.</p></div>
+    <div class="row"><button class="btn small ghost" id="glSpin" type="button" aria-pressed="true">Auto-spin on</button><button class="btn small ghost" id="glReset" type="button">Reset view</button></div>
+  </div>
+
+  <div class="panel lab-panel" id="lullaby">
+    <h3>Lullaby Lab</h3>
+    <p class="small-note">A music box made live in your browser with the Web Audio API. No audio files. Press the keys (or A S D F G H J K on a keyboard). Use the switch to mute at any time.</p>
+    <div class="row">
+      <button class="btn small" id="llMute" type="button" aria-pressed="false">Sound: on</button>
+      <label for="llMood" class="sr">Music box tone</label>
+      <select id="llMood"><option value="box">Music box</option><option value="bell">Bell</option><option value="glass">Glass</option></select>
+      <button class="btn small ghost" id="llPlay1" type="button">Play “Stillhour Lullaby”</button>
+      <button class="btn small ghost" id="llPlay2" type="button">Play “Thirteenth Bell”</button>
+      <button class="btn small ghost" id="llRec" type="button">Record my tune</button>
+      <button class="btn small ghost" id="llPlayRec" type="button" hidden>Play my tune</button>
+    </div>
+    <div class="mbox" id="mbox" role="group" aria-label="Music box keys"></div>
+    <p class="small-note" id="llStatus" aria-live="polite"></p>
+  </div>
+
+  <div class="panel lab-panel" id="flash">
+    <h3>Flashlight in the dark dreams</h3>
+    <p class="small-note">Move your mouse or drag your finger across the dark. Dreams that nobody wrote down appear only where your light falls.</p>
+    <div class="dark-dream" id="darkDream" tabindex="0" aria-label="A dark area with hidden dream words. Move the pointer to light them up. The words are also listed below for screen readers.">
+      <div class="dd-words" id="ddWords" aria-hidden="true"></div>
+      <div class="dd-mask" id="ddMask" aria-hidden="true"></div>
+    </div>
+    <ul class="sr" id="ddList"></ul>
+    <p class="small-note" id="ddCount" aria-live="polite">Dreams found: 0 of 8</p>
+  </div>
+
+  <div class="panel lab-panel" id="catchGame">
+    <h3>Catch the falling dreams</h3>
+    <p class="small-note">Slide the lantern with your mouse, finger or the left/right arrow keys. Catch golden dreams. Do not catch the dark ones.</p>
+    <div class="gl-wrap"><canvas id="cgCanvas" width="480" height="320" tabindex="0" aria-label="A game: move the lantern to catch falling dreams"></canvas></div>
+    <div class="row"><button class="btn small" id="cgStart" type="button">Start</button><span id="cgScore" aria-live="polite">Score 0 · Best 0</span></div>
+  </div>
+
+  <div class="panel lab-panel" id="chat">
+    <h3>Talk to Kairo</h3>
+    <p class="small-note">Kairo answers in her own voice. She follows rules, not AI, so she may not understand everything. Try the suggestions.</p>
+    <div class="chat-log" id="chatLog" role="log" aria-live="polite"></div>
+    <div class="chips" id="chatChips"></div>
+    <form id="chatForm" class="cmp-form"><label for="chatIn" class="sr">Say something to Kairo</label><input id="chatIn" maxlength="120" autocomplete="off" placeholder="Ask about the lantern, the bell, the mirror…"><button class="btn small" type="submit">Send</button></form>
+  </div>
+</section>
+
+<!-- 5b. SECRET MAP, TERMINAL, REPORT, COMPARE -->
+<section id="archive" class="block" aria-labelledby="arTitle">
+  <div class="block-head">
+    <p class="eyebrow">Beyond the story</p>
+    <h2 id="arTitle">Secret Map, Report &amp; Comparison</h2>
+    <p class="lede">Everything you discover is recorded here. Some places on the map are not in any scene.</p>
+  </div>
+  <div class="panel ar-panel">
+    <h3>Map of the story</h3>
+    <p class="small-note" id="mapNote"></p>
+    <div id="mapBox" class="map-box"></div>
+    <div id="mapDetail" class="map-detail" aria-live="polite"></div>
+  </div>
+  <div class="panel ar-panel" id="reportPanel">
+    <h3>Your Kairo Report</h3>
+    <div id="reportBox"></div>
+  </div>
+  <div class="panel ar-panel" id="comparePanel">
+    <h3>Compare with another visitor</h3>
+    <p>Everyone's investigation is slightly different. Swap report codes with a friend, by text or in person, and see where your stories split. This works without any server: the code carries your choices inside it.</p>
+    <p class="small-note"><strong>Honest note:</strong> this site has no shared database, so there is no live leaderboard and no real-time community. Codes are compared in your own browser.</p>
+    <form id="cmpForm" class="cmp-form"><label for="cmpIn">Their code</label><input id="cmpIn" maxlength="24" autocomplete="off" placeholder="KRO-XXXXXXX"><button class="btn small" type="submit">Compare</button></form>
+    <div id="cmpOut" aria-live="polite"></div>
   </div>
 </section>
 
@@ -369,7 +380,7 @@
   </div>
   <div class="gb-grid">
     <form id="gbForm" class="panel gb-form" novalidate>
-      <p class="honest"><strong>Local demonstration.</strong> There is no server behind this page, so notes are saved only in this browser and are not shared with anyone.</p>
+      <p class="honest" id="gbHonest"><strong>Local demonstration.</strong> There is no server behind this page, so notes are saved only in this browser and are not shared with anyone.</p>
       <label for="gbName">Name <span class="opt">(optional, up to 24 characters)</span></label>
       <input id="gbName" name="name" maxlength="24" autocomplete="off" placeholder="A fellow wanderer">
       <label for="gbMsg">Message <span class="opt">(up to 140 characters)</span></label>
@@ -379,6 +390,8 @@
       <button class="btn" type="submit">Sign the guestbook</button>
     </form>
     <div class="panel gb-list-wrap">
+      <h3 id="gbLiveH" hidden>Wishes from visitors</h3>
+      <ul id="gbLiveList" class="gb-list" hidden></ul>
       <h3>Notes on this device</h3>
       <ul id="gbList" class="gb-list"></ul>
       <p class="small-note" id="gbEmpty">Nothing here yet. Yours could be the first note.</p>
@@ -414,15 +427,17 @@
 
 <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
 <div id="sparkles" aria-hidden="true"></div>
+<div id="lightLayer" aria-hidden="true"></div>
+<aside id="companion" class="companion" aria-label="Kairo, your companion" hidden><button class="comp-face" id="compFace" type="button" aria-label="Talk to Kairo"><img id="compImg" src="assets/expr-curious.jpg" alt="" width="64" height="64"></button><div class="comp-bubble" id="compBubble" role="status" aria-live="polite" hidden></div><button class="comp-x" id="compX" type="button" aria-label="Hide Kairo companion">&times;</button></aside>
 
 <script src="js/core.js"></script>
 <script src="js/story.js"></script>
+<script src="js/scroll.js"></script>
 <script src="js/demos.js"></script>
 <script src="js/extras.js"></script>
-<script src="js/onboarding.js"></script>
-<script src="js/living-world.js"></script>
-<script src="js/tier2-features.js"></script>
-<script src="js/tier3-features.js"></script>
-<script src="js/unforgettable.js"></script>
+<script src="js/world.js"></script>
+<script src="js/archive.js"></script>
+<script src="js/tiers.js"></script>
+<script src="js/kairo3d.js" defer></script>
 </body>
 </html>

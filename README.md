@@ -30,24 +30,11 @@ It is fully static, so it deploys as-is to GitHub Pages, Netlify, Vercel or Clou
 **Story (8 short scenes, prologue to epilogue)**
 - Clues are collected into a Detective Notebook (12 clues). Clues can be connected to each other.
 - Trust choice in the Mirror Room changes dialogue and the order the truth is told, never the canonical facts.
-- Clock Tower now offers three paths: reset the clock (the loop continues), open the thirteenth minute (the canonical ending and epilogue), or keep the lost memory (a distinct Memory Keeper ending that can return to the tower).
-- Scene cards show progress (for example, Scene 3 of 8) and plain-language instructions for the action to take.
+- Clock Tower choice: "Reset the clock" is an alternate ending you can return from; "Open the thirteenth minute" is the canonical ending and unlocks the epilogue.
 - Hidden Easter egg: click the missing-point star on Kairo's lantern three times.
 
 **Early-web extras**
 - Sparkle cursor (mouse only), scrolling marquee, hit-counter odometer, guestbook, click sounds with a mute control, day/night (twilight) palette, and a reversible Chaos Mode.
-
-## How visitors use the story
-
-1. Choose **Start the mystery** or scroll to **Explore Kairo's World**.
-2. Read the short text above the interactive scene.
-3. Follow the blue **What to do here** instruction. It tells you the exact object or button to tap.
-4. Tap the clock, bird, drawing, book, mirror, or other named item. When a clue is collected, it is added to the Detective Notebook.
-5. Use the large gold **next scene** button to continue. The numbered scene buttons can also jump between scenes.
-6. Open the notebook from the menu or the floating lantern button. Finding every clue is optional.
-7. At the Clock Tower, choose an ending. The epilogue is unlocked by opening the thirteenth minute.
-
-The new **Your first 30 seconds** panel explains the controls in four short steps. **Calm reading mode** reduces visual distractions and saves that preference in the current browser.
 
 ## Honest notes
 
@@ -70,37 +57,38 @@ The illustrations in `assets/` are crops and cleanups of the single Kairo charac
 index.html        page structure
 style.css         all styles (night + twilight palettes, chaos mode, responsive)
 js/core.js        helpers, settings, clue + notebook system, toasts, modal, audio, hero
-js/story.js       eight scenes, scene progress, trust choice and three ending paths
+js/story.js       the eight story scenes, trust choice, clock tower choice
 js/demos.js       Dream Compass, Memory Archive, Loop Detector
 js/extras.js      sparkle cursor, guestbook, visit counter, credits
-js/onboarding.js  beginner-friendly start action and calm reading mode
-EXPRESSION-PROMPTS.md  prompts for replacing expression portraits
 assets/           images
 ```
 
-## Validation status for this update
+## Testing done
 
-- JavaScript syntax checks passed for `core.js`, `story.js`, `onboarding.js`, `demos.js` and `extras.js`.
-- A full interactive browser test has **not** been run on this updated package. Please test the eight scenes, all three tower choices, local progress, notebook actions, and mobile layout before treating this as a release.
-- Still recommended: test on a real phone, run Lighthouse, and do a screen-reader/keyboard pass.
+Automated browser run (Playwright, desktop 1366x800 and mobile 390x844): full story from prologue to epilogue with all 12 clues, alternate then canonical ending, all three demos, Easter egg, theme / sound / chaos toggles, guestbook validation and HTML escaping, no horizontal overflow, no script errors.
+Not yet done by hand: testing on a real phone, a Lighthouse score, and a screen-reader pass. Please add real results here if you run them.
 
-## Artwork credit reminder
+## Update: ideas 1–6 (alive layer)
+- **js/world.js** (new): Kairo companion that looks where you hover, idle whisper, memory greeting on return, hidden symbols near the "lantern light", shadow that turns, time tools (slow / speed / rewind, stop the dust), hidden choices (back of the lantern, back of a drawing, a note that exists for seconds), mirror inspection, evidence-aware tower text.
+- **js/core.js**: secrets, decisions (flags), clue order, auto-connected clues with a "why" line, clues that read differently by order, pointer-driven star drift, cold tint as danger rises, stereo synthesised sound with volume.
+- **Calm mode** removes every timed moment. Everything is stored only in your browser (localStorage).
 
-Before submitting to a hackathon, replace the Character art TODO below and in the Credits popup (`js/extras.js`) with the actual artist or AI image tool/source you used. Do not leave the TODO in a final submission.
+## Update: ideas 7–12
+- **Sound (7):** stereo synthesis, no audio files. Ticking sits in the left ear and speeds up as danger rises; shadow footsteps in the right ear; whisper noise per scene; silence at key moments; a different short theme per path (trust, alone, shadow, released); volume slider and mute.
+- **Mirror that lies (8):** blink first, a bell only in the glass, backwards text. Inspecting all three changes the mirror scene and the tower text.
+- **Secret map (9):** nine places. The ninth, the Observer's Room, appears after the truth or nine clues.
+- **Terminal (10):** an in-fiction terminal with a message timestamped tomorrow, three ciphers whose keys come from collected clues, and a warning that one later scene contains a deliberate false detail you can report. It runs nothing and reads nothing from your device.
+- **Report (11):** archetype, ending, stats, report code, downloadable image, share button.
+- **Community (12):** compare two report codes inside the browser. If two visitors together hold all 12 clues, a hidden page unlocks. No server and no fake visitor numbers.
 
+## Update: hackathon tiers (all three)
+**Tier 1:** cursor/touch-reactive Kairo; scroll-driven story; the Night/Twilight toggle now also changes Kairo's expression and mood; responsive; many hidden Easter eggs.
+**Tier 2:** Lullaby Lab (Web Audio music box, 3 tones, 2 lullabies, record and replay, mute switch); Flashlight (page-wide toggle plus a dark-dream panel); Dream Delivery route (SVG path drawn and a lantern moved by scroll); interactive storybook (page-turn animation, swipe and arrow keys); mini-game (Catch the Falling Dreams, plus the memory game and loop detector).
+**Tier 3:** 3D WebGL Kairo (hand-written WebGL, no library; drag, pinch, arrows); live wishes wall; localStorage memory and greetings; rule-based chat in Kairo's voice (no AI, no server).
 
-## Living character and story sound (latest update)
-- Kairo's landing-page character is now drawn directly as inline SVG instead of displayed as a character image.
-- The pupils follow the pointer/touch position; the character floats and blinks, and a shadow gives a time-lag effect.
-- A “Hear Kairo” control plays a locally synthesised lantern/whisper cue. The site's existing Sound toggle must be enabled first; audio is opt-in and no audio files or external service are required.
-- Story transitions can trigger quiet synthesized cues (tick, whisper, ominous tone, reveal) while sound is enabled.
-- Sounds are abstract effects, not recorded voice acting or spoken dialogue.
-- Accessibility: reduced-motion settings suppress the character animation; pointer interaction works on touch screens as well.
-
-## Living Mystery Engine (optional interactive activities)
-- Live SVG Kairo on the landing page; pointer-following eyes, blink and shadow movement.
-- Optional character reactions, a rewindable three-moment timeline, mirror puzzle and fictional message terminal.
-- A map for jumping between story locations, a local-only theory notebook, and a copyable case report.
-- Optional generated clock ambience; sound is opt-in and can be stopped or muted.
-- First-time visitors can ignore the experiments and follow the main story's step-by-step hints. All interactive cards explain what to do in plain language.
-- The new activities run locally in the browser. No AI service, account, server, microphone or camera is used. The guestbook, theory notes and story progress stay in the current browser.
+### Turning on the live wishes wall (optional, 2 minutes)
+The wall is a Cloudflare Pages Function in `functions/api/wishes.js`. Without setup the guestbook stays device-only and says so.
+1. Cloudflare dashboard > Workers & Pages > KV > Create a namespace (any name).
+2. Your Pages project > Settings > Bindings > Add > KV namespace. Variable name: `WISHES`. Pick the namespace.
+3. Redeploy (push any commit). The Guestbook section will then say "Live wishes wall".
+Safety built in: 140-char limit, links/emails/phone numbers/rude words rejected, one post per minute per visitor (only a short-lived hash is kept), reporting hides a wish after 3 reports. You can delete wishes in the KV dashboard.
