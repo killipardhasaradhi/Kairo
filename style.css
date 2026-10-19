@@ -805,3 +805,4 @@ html.flashlight #flashMask { opacity: 1; }
 @keyframes flipr { from { transform: rotateY(75deg); opacity: .2; } to { transform: rotateY(0); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .book.flip-l > div, .book.flip-r > div { animation: none; } }
 html.calm .dv-svg { }
+.comp-face img { width: 140%; height: 140%; max-width: none; margin: -6% 0 0 -20%; }
