@@ -545,7 +545,7 @@
     if (mode === 'scroll') {
       var f = FEEL[sc.id];
       head.appendChild(E('div', { class: 'feel' },
-        E('img', { src: 'assets/expr-' + f[0] + '.jpg', alt: '', width: 72, height: 72, loading: 'lazy' }),
+        E('img', { src: 'assets/expr-' + f[0] + '-sm.jpg', alt: '', width: 72, height: 72, loading: 'lazy' }),
         E('span', { text: 'Kairo feels: ' + f[1] })));
     }
     var parts = [head, todo, stage, narr];

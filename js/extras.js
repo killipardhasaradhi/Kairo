@@ -89,7 +89,7 @@
     K.$('#openCredits').addEventListener('click', function () {
       K.modal('Credits', [
         E('p', null, E('strong', { text: 'Character, story and world: ' }), 'Kairo, Stillhour, and everything in the story are original creations made for this hackathon.'),
-        E('p', null, E('strong', { text: 'Character art: ' }), 'Kairo’s character sheet and its cropped illustrations (hero, expressions, turnaround, shadow, locations, project icons). Crops and cleanup were done for the web. Add the artist or tool credit here before submitting. See the README.'),
+        E('p', null, E('strong', { text: 'Character art: ' }), 'The character art was made by the creator with ChatGPT (OpenAI’s image generation), from the creator’s own Kairo character design, including the character sheet and the six expression images. Crops and cleanup for the web (hero, expressions, turnaround, shadow, locations, project icons) were done afterwards.'),
         E('p', null, E('strong', { text: 'Code: ' }), 'Plain HTML, CSS, and JavaScript. Written with help from Claude (Anthropic), an AI coding assistant, which the hackathon rules allow.'),
         E('p', null, E('strong', { text: 'Fonts: ' }), 'Cinzel, Nunito, Caveat, and VT323 from Google Fonts, all under the SIL Open Font License.'),
         E('p', null, E('strong', { text: 'Sound: ' }), 'Every sound is synthesised in your browser with the Web Audio API. There are no audio files, and sound is off until you turn it on.'),

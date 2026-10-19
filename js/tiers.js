@@ -9,7 +9,7 @@
   function mood() {
     var m = MOOD[K.settings.theme] || MOOD.night;
     var img = K.$('#moodImg'), txt = K.$('#moodText');
-    if (img) img.src = 'assets/expr-' + m[0] + '.jpg';
+    if (img) img.src = 'assets/expr-' + m[0] + '-sm.jpg';
     if (txt) txt.textContent = 'Kairo feels ' + m[1];
     document.documentElement.setAttribute('data-mood', m[0]);
   }

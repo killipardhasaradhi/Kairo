@@ -8,7 +8,7 @@
   /* ================= companion (idea 1) ================= */
   var comp, face, img, bub, cx, mood = 'curious', bubT = 0, lastAct = now(), idleSaid = 0, activeMs = 0, scene = null;
   var MOODS = { curious: 1, happy: 1, sad: 1, surprised: 1, thoughtful: 1, determined: 1 };
-  function setMood(m) { if (!MOODS[m]) m = 'curious'; mood = m; if (img) img.src = 'assets/expr-' + m + '.jpg'; }
+  function setMood(m) { if (!MOODS[m]) m = 'curious'; mood = m; if (img) img.src = 'assets/expr-' + m + '-sm.jpg'; }
   function say(text, m, ms, sound) {
     if (!K.settings.companion || !comp) return;
     comp.hidden = false; if (m) setMood(m);
