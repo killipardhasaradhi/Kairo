@@ -1,0 +1,16 @@
+KAIRO — VIRTUAL KAIRO DEPLOYMENT
+
+This build contains a dedicated “Virtual Kairo” panel directly below “Live Kairo” in The Dream Lab.
+It loads the bundled model at: assets/virtual-kairo.glb
+
+IMPORTANT DEPLOY STEPS (Cloudflare Pages Direct Upload):
+1. Extract this ZIP on your device.
+2. Open the extracted folder and select ALL contents inside it (index.html, style.css, js/, assets/, functions/, etc.).
+3. Upload those contents as the new deployment. Do not deploy an older ZIP or only the assets folder.
+4. Wait for the Cloudflare Pages deployment to finish.
+5. Open the live URL in a new tab and hard-refresh / clear the browser cache if the old page remains.
+6. In Dream Lab, scroll below “Live Kairo”. The next panel should say “Virtual Kairo”.
+
+If you still see “EXPERIMENTAL 3D VIEW” followed by “Lullaby Lab”, the live site is still serving an older build. That heading is not present in this build's HTML or JavaScript.
+
+The model is bundled locally. The <model-viewer> viewer library loads from Google's CDN, so displaying the 3D model requires an internet connection.
