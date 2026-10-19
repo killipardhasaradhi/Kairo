@@ -71,6 +71,7 @@
     });
     railNow.textContent = 'Chapter ' + (i + 1) + ' of ' + scenes.length + ': ' + scenes[i].short;
     chapters.forEach(function (c) { c.el.classList.toggle('current', c.i === i); });
+    document.dispatchEvent(new CustomEvent('kairo:chapter', { detail: { id: scenes[i].id } }));
   }
   function goTo(i) {
     var c = chapters[i]; if (!c) return;

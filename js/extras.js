@@ -40,6 +40,20 @@
       });
       empty.hidden = notes.length > 0; K.$('#gbClear').hidden = notes.length === 0;
     }
+    var live = false;
+    function loadLive() {
+      fetch('/api/wishes', { headers: { accept: 'application/json' } }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+        if (!j || !j.live) return;
+        live = true; K.$('#gbHonest').innerHTML = '<strong>Live wishes wall.</strong> Wishes are shared with every visitor. Links, emails, phone numbers and rude words are blocked, you can post once a minute, and anyone can report a wish. Please keep it kind.';
+        var ul = K.$('#gbLiveList'); K.$('#gbLiveH').hidden = false; ul.hidden = false; K.clear(ul);
+        if (!j.wishes.length) ul.appendChild(E('li', { text: 'No wishes yet. Be the first.' }));
+        j.wishes.forEach(function (w) {
+          var rep = E('button', { type: 'button', class: 'linklike', 'aria-label': 'Report this wish' }, 'report');
+          rep.addEventListener('click', function () { fetch('/api/wishes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ report: w.id }) }).then(function () { rep.textContent = 'reported'; rep.disabled = true; }); });
+          ul.appendChild(E('li', null, E('div', { class: 'who', text: w.name || 'A fellow wanderer' }), E('div', { text: w.msg + ' ' }), rep));
+        });
+      }).catch(function () { /* no backend: stay local */ });
+    }
     msg.addEventListener('input', function () { count.textContent = msg.value.length + ' / 140'; err.textContent = ''; });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -49,6 +63,13 @@
       var combined = m + ' ' + nm;
       if (/[\w.+-]+@[\w-]+\.[\w.-]+/.test(combined) || /(\+?\d[\s().-]?){7,}/.test(combined) || /https?:\/\/|www\./i.test(combined)) {
         err.textContent = 'Please leave out emails, phone numbers, and links.'; return;
+      }
+      if (live) {
+        fetch('/api/wishes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: nm, msg: m }) }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); }).then(function (o) {
+          if (o.ok) { msg.value = ''; count.textContent = '0 / 140'; K.toast('Your wish is on the wall', 'Every visitor can read it now.'); loadLive(); }
+          else err.textContent = o.j && o.j.error === 'slow-down' ? 'Please wait a minute before posting again.' : o.j && o.j.error === 'not-allowed' ? 'That message was not allowed. Please keep it kind and leave out links and personal details.' : 'Could not post right now. Try again later.';
+        }).catch(function () { err.textContent = 'Could not reach the wishes wall. Try again later.'; });
+        return;
       }
       notes.push({ name: nm.slice(0, 24), msg: m, t: Date.now() });
       if (notes.length > 20) notes.shift();
@@ -60,7 +81,7 @@
       if (!window.confirm('Delete all guestbook notes stored on this device?')) return;
       notes = []; K.store.del('guestbook'); draw();
     });
-    draw();
+    draw(); loadLive();
   }
 
   /* ---------- credits ---------- */

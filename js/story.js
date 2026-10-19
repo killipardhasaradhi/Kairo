@@ -248,13 +248,14 @@
     openBtn.addEventListener('click', function () {
       K.addClue('book');
       openBtn.hidden = true;
-      var pg = 0, body = E('div', { class: 'book', tabindex: '0', role: 'group', 'aria-label': 'The book KAIRO Final Loop', 'aria-live': 'polite' });
+      var pg = 0, flipDir = '', body = E('div', { class: 'book', tabindex: '0', role: 'group', 'aria-label': 'The book KAIRO Final Loop', 'aria-live': 'polite' });
       var no = E('span', { class: 'pgno' });
       var prev = E('button', { type: 'button', class: 'btn small ghost' }, 'Previous page');
       var nxt = E('button', { type: 'button', class: 'btn small' }, 'Next page');
       var close = E('button', { type: 'button', class: 'btn small ghost' }, 'Close book');
       function draw() {
         K.clear(body); var p = pages[pg];
+        body.classList.remove('flip-l', 'flip-r'); void body.offsetWidth; if (flipDir && K.motionOK()) body.classList.add(flipDir);
         var inner = E('div', null, p.h ? E('p', { class: 'pg-h', text: p.h }) : null, p.star ? starSvg(10) : null, E('p', { class: 'pg-t', text: p.t }));
         body.appendChild(inner);
         no.textContent = 'Page ' + (pg + 1) + ' of ' + pages.length;
@@ -265,8 +266,10 @@
         if (p.star) { if (K.addClue('star')) say('The missing-point star again. It is on the lantern, in the drawings, and now here.'); }
         if (first && pg === pages.length - 1) say('Someone has reached this page before. That someone may have been Kairo.');
       }
-      prev.addEventListener('click', function () { if (pg > 0) { pg--; draw(); } });
-      nxt.addEventListener('click', function () { if (pg < pages.length - 1) { pg++; draw(); } });
+      prev.addEventListener('click', function () { if (pg > 0) { pg--; flipDir = 'flip-r'; draw(); } });
+      nxt.addEventListener('click', function () { if (pg < pages.length - 1) { pg++; flipDir = 'flip-l'; draw(); } });
+      var tx = null; body.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+      body.addEventListener('touchend', function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (dx < -40) nxt.click(); else if (dx > 40) prev.click(); }, { passive: true });
       close.addEventListener('click', function () { K.clear(holder); openBtn.hidden = false; holder.appendChild(openBtn); openBtn.focus(); });
       body.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowRight') { e.preventDefault(); nxt.click(); } else if (e.key === 'ArrowLeft') { e.preventDefault(); prev.click(); }
@@ -559,6 +562,7 @@
     parts.forEach(function (p) { article.appendChild(p); });
     root.appendChild(article);
     sc.build(stage, say, ctx);
+    document.dispatchEvent(new CustomEvent('kairo:scene', { detail: { id: sc.id, index: i, stage: stage, narr: narr, say: say, mode: mode, article: article } }));
     return { title: title, destroy: function () { leaves.forEach(function (fn) { fn(); }); leaves = []; } };
   }
   function show(i, focusTitle) {
