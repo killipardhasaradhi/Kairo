@@ -806,3 +806,24 @@ html.flashlight #flashMask { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .book.flip-l > div, .book.flip-r > div { animation: none; } }
 html.calm .dv-svg { }
 .comp-face img { width: 140%; height: 140%; max-width: none; margin: -6% 0 0 -20%; }
+
+/* ===== live SVG Kairo ===== */
+.live-grid { display: grid; grid-template-columns: minmax(260px, 460px) 1fr; gap: 1.2rem; align-items: center; }
+.live-kairo { border-radius: 16px; background: radial-gradient(circle at 50% 40%, #1d1a5c, #070a1f 75%); border: 1px solid var(--line); overflow: hidden; touch-action: manipulation; }
+.live-kairo svg { display: block; width: 100%; height: auto; }
+.live-tips { padding-left: 1.1rem; color: var(--muted); font-size: .92rem; }
+#lkSvg #lkHead { transform-origin: 200px 300px; }
+#lkSvg #lkBody { transform-origin: 200px 400px; }
+#lkSvg #lkEarLg { transform-origin: 120px 172px; }
+#lkSvg #lkEarRg { transform-origin: 282px 176px; }
+#lkSvg .lk-iris, #lkSvg .lk-pupil { transform-box: fill-box; transform-origin: center; }
+#lkSvg .lk-ear, #lkSvg .lk-lantern, #lkSvg .lk-crown { cursor: pointer; }
+#lkSvg .lk-ear:hover path:first-child { filter: brightness(1.15); }
+#lkSvg .lk-lantern:hover #lkHalo { opacity: .9; }
+#lkSvg [tabindex]:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.lk-tw { animation: lktw 3.2s ease-in-out infinite; }
+@keyframes lktw { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+.lk-burst { animation: lkburst .9s ease-out forwards; transform-box: fill-box; transform-origin: center; }
+@keyframes lkburst { from { opacity: 1; translate: 0 0; } to { opacity: 0; translate: var(--dx) var(--dy); } }
+@media (max-width: 720px) { .live-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .lk-tw { animation: none; } }

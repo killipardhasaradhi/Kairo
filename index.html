@@ -63,7 +63,7 @@
       <a class="btn" href="#story" id="ctaExplore">Explore Kairo's World</a>
       <a class="btn ghost" href="#portfolio" id="ctaPortfolio">View Portfolio</a>
     </div>
-    <p class="mini-note">Short on time? <a href="#meet">Meet Kairo</a> or <a href="#portfolio">jump straight to the three inventions</a>. You never have to finish the story to see them.</p>
+    <p class="mini-note"><a href="#liveKairoPanel">Meet the live Kairo who watches your cursor</a> &middot; Short on time? <a href="#meet">Meet Kairo</a> or <a href="#portfolio">jump straight to the three inventions</a>. You never have to finish the story to see them.</p>
     <div class="lantern-clock" role="img" aria-label="The lantern's clock. It has no hands, and its marker is ticking backward.">
       <svg viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
         <circle cx="60" cy="60" r="54" class="lc-rim"/>
@@ -82,7 +82,7 @@
       <img class="kairo-img" id="kairoImg" src="assets/kairo-clean.jpg" alt="Kairo, a small hooded wanderer with a flowing midnight-blue cloak, glowing golden eyes, translucent cyan and violet ears, and a brass lantern holding a clock with no hands." width="556" height="492" fetchpriority="high">
       <button class="egg-star" id="eggStar" type="button" aria-label="A small star with one missing point, glowing on the lantern"><svg viewBox="-12 -12 24 24" aria-hidden="true"><path id="eggStarPath" d=""/></svg></button>
     </div>
-    <div class="mood-chip" id="moodChip" aria-live="polite"><img id="moodImg" src="assets/expr-determined.jpg" alt="" width="44" height="44"><span id="moodText">Kairo feels determined (night)</span></div>
+    <div class="mood-chip" id="moodChip" aria-live="polite"><img id="moodImg" src="assets/expr-determined-sm.jpg" alt="" width="44" height="44"><span id="moodText">Kairo feels determined (night)</span></div>
     <figcaption>Watch the shadow. It moves first. <span class="cap-sub">(Move your mouse or tap and drag on the picture.)</span></figcaption>
   </figure>
 </section>
@@ -125,7 +125,7 @@
 
       <div role="tabpanel" id="panelExpr" aria-labelledby="tabExpr">
         <div class="expr-main">
-          <img id="exprImg" src="assets/expr-curious.jpg" alt="Kairo looking curious" width="512" height="512">
+          <img id="exprImg" src="assets/expr-curious.jpg" alt="Kairo looking curious" width="512" height="512" loading="lazy" decoding="async">
           <div>
             <p class="expr-name" id="exprName">Curious</p>
             <p class="expr-note" id="exprNote">Kairo notices a strange symbol or an unexplained event.</p>
@@ -295,8 +295,29 @@
     <p class="lede">A 3D Kairo, a lullaby music box, a flashlight for the dark, a game, and a chance to talk to Kairo.</p>
   </div>
 
+  <div class="panel lab-panel live-panel" id="liveKairoPanel">
+    <h3>Live Kairo</h3>
+    <p class="small-note">She watches your cursor (or your finger). Move around her, hold still, get close to her face, then try tapping her ears, her hood star, her lantern, or her cheeks three times.</p>
+    <div class="live-grid">
+      <div id="liveKairo" class="live-kairo"></div>
+      <div class="live-side">
+        <p class="eyebrow">Her mood</p>
+        <div class="row" role="group" aria-label="Choose Kairo's mood">
+          <button class="chip lk-mood" data-m="curious" aria-pressed="true" type="button">Curious</button>
+          <button class="chip lk-mood" data-m="happy" aria-pressed="false" type="button">Happy</button>
+          <button class="chip lk-mood" data-m="thoughtful" aria-pressed="false" type="button">Thoughtful</button>
+          <button class="chip lk-mood" data-m="determined" aria-pressed="false" type="button">Determined</button>
+          <button class="chip lk-mood" data-m="sad" aria-pressed="false" type="button">Sad</button>
+          <button class="chip lk-mood" data-m="surprised" aria-pressed="false" type="button">Surprised</button>
+        </div>
+        <ul class="live-tips"><li>Her eyes, head, ears and cloak each follow you differently.</li><li>Stay still and she wanders and blinks on her own.</li><li>Come very close to her face and she is startled.</li><li>Stay on her a moment and she smiles.</li><li>Switch Night or Twilight in the header and her mood follows.</li></ul>
+        <p class="small-note" id="lkStatus" aria-live="polite">Kairo feels curious.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="panel lab-panel" id="threeD">
-    <h3>Kairo in 3D</h3>
+    <h3>Experimental 3D view</h3>
     <p class="small-note">Drag (or swipe) to turn her. Pinch with two fingers, or press + and −, to zoom. Arrow keys also rotate. It is drawn live with WebGL.</p>
     <div class="gl-wrap"><canvas id="glKairo" width="640" height="460" tabindex="0" aria-label="A 3D model of Kairo you can rotate with your mouse, finger or arrow keys"></canvas><p class="gl-fallback" id="glFail" hidden>Your browser cannot show WebGL right now, so the 3D view is switched off. Everything else still works.</p></div>
     <div class="row"><button class="btn small ghost" id="glSpin" type="button" aria-pressed="true">Auto-spin on</button><button class="btn small ghost" id="glReset" type="button">Reset view</button></div>
@@ -428,7 +449,7 @@
 <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
 <div id="sparkles" aria-hidden="true"></div>
 <div id="lightLayer" aria-hidden="true"></div>
-<aside id="companion" class="companion" aria-label="Kairo, your companion" hidden><button class="comp-face" id="compFace" type="button" aria-label="Talk to Kairo"><img id="compImg" src="assets/expr-curious.jpg" alt="" width="64" height="64"></button><div class="comp-bubble" id="compBubble" role="status" aria-live="polite" hidden></div><button class="comp-x" id="compX" type="button" aria-label="Hide Kairo companion">&times;</button></aside>
+<aside id="companion" class="companion" aria-label="Kairo, your companion" hidden><button class="comp-face" id="compFace" type="button" aria-label="Talk to Kairo"><img id="compImg" src="assets/expr-curious-sm.jpg" alt="" width="64" height="64"></button><div class="comp-bubble" id="compBubble" role="status" aria-live="polite" hidden></div><button class="comp-x" id="compX" type="button" aria-label="Hide Kairo companion">&times;</button></aside>
 
 <script src="js/core.js"></script>
 <script src="js/story.js"></script>
@@ -438,6 +459,7 @@
 <script src="js/world.js"></script>
 <script src="js/archive.js"></script>
 <script src="js/tiers.js"></script>
+<script src="js/kairo-live.js"></script>
 <script src="js/kairo3d.js" defer></script>
 </body>
 </html>
